@@ -34,3 +34,8 @@ let firstValue = 0;
 let secondValue = 0;
 let operator = '';
 
+let input = document.querySelector('input');
+
+let container = document.querySelector('.container');
+
+container.addEventListener('click', (e) => firstValue = +e.target.textContent);
