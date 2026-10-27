@@ -40,10 +40,12 @@ function resultInput(res, oper){
         operator = oper;
         secondValue = ' ';
         firstValue = res;
+        operand = 1;
     } else {
         operator = ' ';
         secondValue = res;
         firstValue = ' ';
+        operand = 2;
     }
     if (res === Infinity || res === -Infinity){
         secondValue = `Nice try!`;
