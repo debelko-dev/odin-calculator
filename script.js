@@ -17,16 +17,16 @@ function divide(a, b){
 function operate(a, b, oper){
     switch (oper) {
         case '+':
-            add(a, b);
+            return add(a, b);
             break;
         case '-':
-            subtract(a, b);
+            return subtract(a, b);
             break;
         case '*':
-            multiply(a, b);
+            return multiply(a, b);
             break;
         case '/':
-            divide(a, b);
+            return divide(a, b);
     }
 }
 
@@ -34,10 +34,15 @@ function updateInput(){
     input.textContent = `${firstValue} ${operator} ${secondValue}`;
 }
 
-function resultInput(res){
-    operator = ' ';
+function resultInput(res, oper){
+    operand = 1;
+    operator = oper;
     secondValue = ''
     firstValue = res;
+    if (res === Infinity || res === -Infinity){
+        secondValue = 'ERROR';
+        firstValue = '';
+    }
     input.textContent = `${firstValue} ${operator} ${secondValue}`;
 } 
 
@@ -54,6 +59,7 @@ container.addEventListener('click', (e) => {
     if(!isNaN(+e.target.textContent)){   
         if(operator === ' '){
             operand = 1;
+            secondValue = '';
             firstValue += e.target.textContent;
             console.log(`firstValue = ${+firstValue}`);
             updateInput();
@@ -79,25 +85,14 @@ container.addEventListener('click', (e) => {
                 updateInput();
             }
         }
-    } else if(e.target.textContent !== '='){
+    } else if(e.target.textContent !== '=' && operator === ' '){
         operator = e.target.textContent;
         updateInput();
     } else {
-        switch (operator) {
-            case '+':
-                resultInput(add(+firstValue, +secondValue));
-                break;
-        
-            case '-':
-                resultInput(subtract(+firstValue, +secondValue));
-                break;
-            
-            case '*':
-                resultInput(multiply(+firstValue, +secondValue));
-                break;
-            case '/':
-                resultInput(divide(+firstValue, +secondValue));
-                break;
+        if(e.target.textContent === '='){
+            resultInput(operate(+firstValue, +secondValue, operator), ' ');
+        } else {
+            resultInput(operate(+firstValue, +secondValue, operator), e.target.textContent);
         }
     }
     
