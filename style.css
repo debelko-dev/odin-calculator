@@ -42,3 +42,17 @@ body {
     background-color: gray;
     color: white;
 }
+
+.calculator-buttons .button-c {
+    flex: 2;
+    padding: 0 1px 0 1px;
+}
+
+.calculator-buttons .button-ce {
+    flex: 1;
+}
+
+.calculator-buttons .button-divide {
+    flex: 1;
+
+}

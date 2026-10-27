@@ -40,7 +40,7 @@ function resultInput(res, oper){
     secondValue = ''
     firstValue = res;
     if (res === Infinity || res === -Infinity){
-        secondValue = 'ERROR';
+        secondValue = `Nice try!`;
         firstValue = '';
     }
     input.textContent = `${firstValue} ${operator} ${secondValue}`;
