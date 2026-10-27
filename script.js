@@ -36,18 +36,49 @@ function updateInput(){
 
 function resultInput(res, oper){
     operand = 1;
-    operator = oper;
-    secondValue = ''
-    firstValue = res;
+    if (oper !== ' '){
+        operator = oper;
+        secondValue = ' ';
+        firstValue = res;
+    } else {
+        operator = ' ';
+        secondValue = res;
+        firstValue = ' ';
+    }
     if (res === Infinity || res === -Infinity){
         secondValue = `Nice try!`;
-        firstValue = '';
+        firstValue = ' ';
     }
+
     input.textContent = `${firstValue} ${operator} ${secondValue}`;
 } 
 
-let firstValue = '';
-let secondValue = '';
+function getSecondNumber(string){
+    if (secondValue.includes('.' && string === '.')){
+        //i do not want to do anything with this))
+    } else {
+        operand = 2;
+        secondValue += string;
+        console.log(`secondValue = ${+secondValue}`);
+        updateInput();
+    }
+}
+
+function getFirstNumber(string){
+    if (firstValue.includes('.') && string === '.'){
+    
+    } else {
+        operand = 1;
+        secondValue = ' ';
+        firstValue += string;
+        console.log(`firstValue = ${+firstValue}`);
+        updateInput();
+}
+    }
+    
+
+let firstValue = ' ';
+let secondValue = ' ';
 let operator = ' ';
 let operand = 1;
 
@@ -56,40 +87,49 @@ let input = document.querySelector('.input');
 let container = document.querySelector('.container');
 
 container.addEventListener('click', (e) => {
-    if(!isNaN(+e.target.textContent)){   
+    if(!isNaN(+e.target.textContent) || e.target.textContent === '.'){   
         if(operator === ' '){
-            operand = 1;
-            secondValue = '';
-            firstValue += e.target.textContent;
-            console.log(`firstValue = ${+firstValue}`);
-            updateInput();
+            getFirstNumber(e.target.textContent);
         } else {
-            operand = 2;
-            secondValue += e.target.textContent;
-            console.log(`secondValue = ${+secondValue}`);
-            updateInput();
+            getSecondNumber(e.target.textContent);
         }
     } else if (e.target.textContent === 'C' || e.target.textContent === 'CE') {
         if (e.target.textContent === 'C'){
             operand = 1;
-            firstValue = '';
-            secondValue = '';
+            firstValue = ' ';
+            secondValue = ' ';
             operator = ' ';
             updateInput();
         } else {
             if (operand === 1){
-                firstValue = '';
+                firstValue = ' ';
+                updateInput();
+            } else if (operand === 2){
+                secondValue = ' ';
                 updateInput();
             } else {
-                secondValue = '';
+                operator = ' ';
                 updateInput();
             }
         }
     } else if(e.target.textContent !== '=' && operator === ' '){
-        operator = e.target.textContent;
-        updateInput();
+        
+        if(secondValue === ' '){
+            operator = e.target.textContent;
+            operand = 3;
+            updateInput();
+        } else {
+            // to replace values after result culculations and operator entering
+            firstValue = secondValue;
+            secondValue = ' ';
+            operator = e.target.textContent;
+            operand = 3;
+            updateInput();
+        }
     } else {
-        if(e.target.textContent === '='){
+        if (secondValue === ' '){
+            
+        } else if(e.target.textContent === '='){
             resultInput(operate(+firstValue, +secondValue, operator), ' ');
         } else {
             resultInput(operate(+firstValue, +secondValue, operator), e.target.textContent);
