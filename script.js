@@ -86,7 +86,8 @@ function getPressedKey(e){
     || e.key === '-'
     || e.key === '*'
     || e.key === '/'
-    || e.key === '='){
+    || e.key === '='
+    || e.key === '.'){
         let result = {target: {
             textContent: e.key,
         },};
