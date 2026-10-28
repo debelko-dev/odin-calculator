@@ -78,29 +78,54 @@ function getFirstNumber(string){
     }
 }
 
-function mainLogic(e){
-    
+// Keybard interpretation for main function
+function getPressedKey(e){
+    console.log(e);
+    if((+e.key >= 0 && +e.key <= 9)
+    || e.key === '+'
+    || e.key === '-'
+    || e.key === '*'
+    || e.key === '/'
+    || e.key === '='){
+        let result = {target: {
+            textContent: e.key,
+        },};
+        mainFunction(result);
+    }
+    if(e.key === 'Enter'){
+        let result = {target: {
+            textContent: '=',
+        },};
+        mainFunction(result);
+    }
+    if(e.key === 'Backspace'){
+        let result = {target: {
+            textContent: 'CE',
+        },};
+        mainFunction(result);
+    }
+    if(e.key === 'Delete'){
+        let result = {target: {
+            textContent: 'C',
+        },};
+        mainFunction(result);
+    }
+
 }
+
+function mainFunction(input){
+
+    input = input.target.textContent;
     
-
-let firstValue = ' ';
-let secondValue = ' ';
-let operator = ' ';
-let operand = 1;
-
-let input = document.querySelector('.input');
-
-let container = document.querySelector('.container');
-
-container.addEventListener('mouseup', (e) => {
-    if(!isNaN(+e.target.textContent) || e.target.textContent === '.'){   
+    console.log(input);
+    if(!isNaN(+input) || input === '.'){   
         if(operator === ' '){
-            getFirstNumber(e.target.textContent);
+            getFirstNumber(input);
         } else {
-            getSecondNumber(e.target.textContent);
+            getSecondNumber(input);
         }
-    } else if (e.target.textContent === 'C' || e.target.textContent === 'CE') {
-        if (e.target.textContent === 'C'){
+    } else if (input === 'C' || input === 'CE') {
+        if (input === 'C'){
             operand = 1;
             firstValue = ' ';
             secondValue = ' ';
@@ -118,30 +143,42 @@ container.addEventListener('mouseup', (e) => {
                 updateInput();
             }
         }
-    } else if(e.target.textContent !== '=' && operator === ' '){
+    } else if(input !== '=' && operator === ' '){
         
         if(secondValue === ' '){
-            operator = e.target.textContent;
+            operator = input;
             operand = 3;
             updateInput();
         } else {
             // to replace values after result culculations and operator entering
             firstValue = secondValue;
             secondValue = ' ';
-            operator = e.target.textContent;
+            operator = input;
             operand = 3;
             updateInput();
         }
     } else {
         if (secondValue === ' '){
             
-        } else if(e.target.textContent === '='){
+        } else if(input === '='){
             resultInput(operate(+firstValue, +secondValue, operator), ' ');
         } else {
-            resultInput(operate(+firstValue, +secondValue, operator), e.target.textContent);
+            resultInput(operate(+firstValue, +secondValue, operator), input);
         }
     }
     
 
-});
+}
+
+let firstValue = ' ';
+let secondValue = ' ';
+let operator = ' ';
+let operand = 1;
+
+let input = document.querySelector('.input');
+
+let container = document.querySelector('.container');
+
+container.addEventListener('mouseup', mainFunction);
+document.addEventListener('keydown', getPressedKey);
 
