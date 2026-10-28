@@ -90,24 +90,28 @@ function getPressedKey(e){
     || e.key === '.'){
         let result = {target: {
             textContent: e.key,
+            classList: {value: ' '},
         },};
         mainFunction(result);
     }
     if(e.key === 'Enter'){
         let result = {target: {
             textContent: '=',
+            classList: {value: ' '},
         },};
         mainFunction(result);
     }
     if(e.key === 'Backspace'){
         let result = {target: {
             textContent: 'CE',
+            classList: {value: ' '},
         },};
         mainFunction(result);
     }
     if(e.key === 'Delete'){
         let result = {target: {
             textContent: 'C',
+            classList: {value: ' '},
         },};
         mainFunction(result);
     }
@@ -115,56 +119,59 @@ function getPressedKey(e){
 }
 
 function mainFunction(input){
-
-    input = input.target.textContent;
-    
-    console.log(input);
-    if(!isNaN(+input) || input === '.'){   
-        if(operator === ' '){
-            getFirstNumber(input);
-        } else {
-            getSecondNumber(input);
-        }
-    } else if (input === 'C' || input === 'CE') {
-        if (input === 'C'){
-            operand = 1;
-            firstValue = ' ';
-            secondValue = ' ';
-            operator = ' ';
-            updateInput();
-        } else {
-            if (operand === 1){
-                firstValue = ' ';
-                updateInput();
-            } else if (operand === 2){
-                secondValue = ' ';
-                updateInput();
+    if(input.target.classList.value !== 'input'){
+        input = input.target.textContent;
+        
+        console.log(input);
+        if(!isNaN(+input) || input === '.'){   
+            if(operator === ' '){
+                getFirstNumber(input);
             } else {
+                getSecondNumber(input);
+            }
+        } else if (input === 'C' || input === 'CE') {
+            if (input === 'C'){
+                operand = 1;
+                firstValue = ' ';
+                secondValue = ' ';
                 operator = ' ';
                 updateInput();
+            } else {
+                if (operand === 1){
+                    firstValue = ' ';
+                    updateInput();
+                } else if (operand === 2){
+                    operand = 3;
+                    secondValue = ' ';
+                    updateInput();
+                } else {
+                    operator = ' ';
+                    operand = 1;
+                    updateInput();
+                }
             }
-        }
-    } else if(input !== '=' && operator === ' '){
-        
-        if(secondValue === ' '){
-            operator = input;
-            operand = 3;
-            updateInput();
-        } else {
-            // to replace values after result culculations and operator entering
-            firstValue = secondValue;
-            secondValue = ' ';
-            operator = input;
-            operand = 3;
-            updateInput();
-        }
-    } else {
-        if (secondValue === ' '){
+        } else if(input !== '=' && operator === ' '){
             
-        } else if(input === '='){
-            resultInput(operate(+firstValue, +secondValue, operator), ' ');
+            if(secondValue === ' '){
+                operator = input;
+                operand = 3;
+                updateInput();
+            } else {
+                // to replace values after result culculations and operator entering
+                firstValue = secondValue;
+                secondValue = ' ';
+                operator = input;
+                operand = 3;
+                updateInput();
+            }
         } else {
-            resultInput(operate(+firstValue, +secondValue, operator), input);
+            if (secondValue === ' '){
+                
+            } else if(input === '='){
+                resultInput(operate(+firstValue, +secondValue, operator), ' ');
+            } else {
+                resultInput(operate(+firstValue, +secondValue, operator), input);
+            }
         }
     }
     
