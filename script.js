@@ -56,7 +56,7 @@ function resultInput(res, oper){
 } 
 
 function getSecondNumber(string){
-    if (secondValue.includes('.' && string === '.')){
+    if (secondValue.includes('.') && string === '.'){
         //i do not want to do anything with this))
     } else {
         operand = 2;
