@@ -75,8 +75,12 @@ function getFirstNumber(string){
         firstValue += string;
         console.log(`firstValue = ${+firstValue}`);
         updateInput();
-}
     }
+}
+
+function mainLogic(e){
+    
+}
     
 
 let firstValue = ' ';
