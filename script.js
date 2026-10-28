@@ -88,7 +88,7 @@ let input = document.querySelector('.input');
 
 let container = document.querySelector('.container');
 
-container.addEventListener('click', (e) => {
+container.addEventListener('mouseup', (e) => {
     if(!isNaN(+e.target.textContent) || e.target.textContent === '.'){   
         if(operator === ' '){
             getFirstNumber(e.target.textContent);

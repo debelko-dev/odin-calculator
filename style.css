@@ -14,6 +14,7 @@ body {
     height: 700px;
     flex: 1;
     border: 3px solid black;
+    user-select: none;
 }
 
 .calculator-buttons{
@@ -36,6 +37,7 @@ body {
     text-align: end;
     margin: 3px 3px 10px 3px;
     border: 1px solid black;
+    user-select: all;
 }
 
 .calculator-buttons div:hover{
